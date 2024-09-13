@@ -1,0 +1,57 @@
+''' a simple calculator with basic arithmetic operations.
+ Prompt the user to input two numbers and an operation choice.
+ Perform the calculation and display the result.
+'''
+
+def add(a,b):
+    sum = a+b
+    print(f"\n-> The sum of {a} and {b} is {sum}.")
+
+def diff(a,b):
+    difference = abs(a-b)
+    print(f"\n-> The difference of {a} and {b} is {difference}.")
+
+def product(a,b):
+    product = a*b
+    print(f"\n-> The product of {a} and {b} is {product}.")
+
+def division(a,b):
+    result = a/b
+    print(f"\n-> The result when {b} divides {a} is {result}.")
+    quotient = a//b
+    print(f"\n-> The quotient when {b} divides {a} is {quotient}.")
+    remainder = a%b
+    print(f"\n-> The remainder when {b} divides {a} is {remainder}.")
+    
+def main(): 
+    while(1):
+        print("\n----Basic Arithmetic Operation Menu----")
+        print("1. Addition.\n2.Subtraction\n3.Multiplication\n4.Division")
+        choice = int(input("Enter your Choice(1/2/3/4):"))
+        if choice == 1:
+            a = int(input("Enter first number:"))
+            b = int(input("Enter second number:"))
+            add(a,b)
+    
+        elif choice == 2:
+            a = int(input("Enter first number:"))
+            b = int(input("Enter second number:"))
+            diff(a,b)
+        
+        elif choice == 3:
+            a = int(input("Enter first number:"))
+            b = int(input("Enter second number:"))
+            product(a,b)
+    
+        elif choice == 4:
+            a = int(input("Enter dividend:"))
+            b = int(input("Enter divisor:"))
+            if(b == 0):
+                print("Division by zero is not possible.")
+            else:
+                division(a,b)
+        else:
+            print("Invalid Choice!! please try again")
+
+if __name__ == '__main__':
+    main()
