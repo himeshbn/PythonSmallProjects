@@ -1,0 +1,89 @@
+'''  This project aims to create a
+ command-line or GUI-based application using Python, allowing
+ users to create, update, and track their to-do lists
+'''
+
+import json
+import os
+
+TODO_FILE = 'todo_list.json'
+
+
+def load_todo_list():
+    if not os.path.exists(TODO_FILE):
+        return []
+    with open(TODO_FILE, 'r') as file:
+        return json.load(file)
+
+
+def save_todo_list(todo_list):
+    with open(TODO_FILE, 'w') as file:
+        json.dump(todo_list, file, indent=4)
+
+
+def add_task(todo_list, task):
+    todo_list.append({"task": task, "completed": False})
+    save_todo_list(todo_list)
+    print(f"Task '{task}' added successfully.")
+
+
+def view_tasks(todo_list):
+    if not todo_list:
+        print("No tasks found.")
+    else:
+        for i, task in enumerate(todo_list, start=1):
+            status = "Done" if task["completed"] else "Not Done"
+            print(f"{i}. {task['task']} - {status}")
+
+
+def update_task(todo_list, task_num, completed):
+    if 0 < task_num <= len(todo_list):
+        todo_list[task_num - 1]["completed"] = completed
+        save_todo_list(todo_list)
+        status = "completed" if completed else "not completed"
+        print(f"Task {task_num} marked as {status}.")
+    else:
+        print("Invalid task number.")
+
+
+def remove_task(todo_list, task_num):
+    if 0 < task_num <= len(todo_list):
+        removed_task = todo_list.pop(task_num - 1)
+        save_todo_list(todo_list)
+        print(f"Task '{removed_task['task']}' removed successfully.")
+    else:
+        print("Invalid task number.")
+
+
+def main():
+    todo_list = load_todo_list()
+
+    while True:
+        print("\n--- To-Do List Menu ---")
+        print("1. Add Task")
+        print("2. View Tasks")
+        print("3. Mark Task as Completed")
+        print("4. Remove Task")
+        print("5. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            task = input("Enter task description: ")
+            add_task(todo_list, task)
+        elif choice == '2':
+            view_tasks(todo_list)
+        elif choice == '3':
+            task_num = int(input("Enter task number to mark as completed: "))
+            update_task(todo_list, task_num, True)
+        elif choice == '4':
+            task_num = int(input("Enter task number to remove: "))
+            remove_task(todo_list, task_num)
+        elif choice == '5':
+            print("Exiting the application.")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+
+if __name__ == "__main__":
+    main()
